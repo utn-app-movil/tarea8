@@ -19,7 +19,7 @@ class LoginEventsActivity : AppCompatActivity() {
         lstLoginEvents = findViewById(R.id.lstLoginEvents)
         dbManager = SQLiteManager(this)
 
-        // Obtener los registros de inicio de sesión
+        // Obtener los registros de inicio de sesiónn
         loginEvents = dbManager.getAllLoginEvents()
 
         // Configurar el adaptador para mostrar los registros
