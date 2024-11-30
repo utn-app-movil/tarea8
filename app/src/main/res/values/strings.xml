@@ -7,7 +7,7 @@
     <string name="contactPhone">Phone</string>
     <string name="contactEmail">Email</string>
     <string name="contactAddress">Address</string>
-    <string name="save">save</string>
+    <string name="save">Save</string>
     <string name="msgSave">The information has been saved.</string>
     <string name="msgDelete">The information has been deleted.</string>
     <string name="delete">Delete</string>
@@ -18,7 +18,7 @@
     <string name="mnuRecycleView">Recycler View List</string>
     <string name="DisplayDialog">Display Dialog</string>
     <string name="Cancel">Cancel</string>
-    <string name="msgNotFoundContact">El contacto no existe.</string>
+    <string name="msgNotFoundContact">The contact does not exist.</string>
     <string name="Ok">Ok</string>
     <string name="QuestionCloseApp">Do you want to close this application?</string>
     <string name="TitleDialogQuestion">Question</string>
@@ -26,10 +26,21 @@
     <string name="ConfirmDelete">Do you want to delete the information?</string>
     <string name="TakePicture">Take a picture</string>
     <string name="SelectPhoto">Select Photo</string>
+    <string name="empty_credentials">Please enter both username and password.</string>
+    <string name="invalid_credentials">Invalid credentials. Please try again.</string>
+    <string name="server_error">Server error. Please try again later.</string>
+    <string name="connection_error">Unable to connect to the server: %1$s</string>
+    <string name="welcome_user">Welcome, %1$s %2$s</string>
+    <string name="username_hint">Username</string>
+    <string name="password_hint">Password</string>
+    <string name="login_button">Log in</string>
+    <string name="login_title">Log in</string>
+    <string name="loading">Loading</string>
+    <string name="error">Error</string>
 
     <string-array name="Countries">
         <item>Costa Rica</item>
-        <item>United State</item>
+        <item>United States</item>
         <item>Japan</item>
         <item>Mexico</item>
         <item>Spain</item>
@@ -39,7 +50,8 @@
         <item>Italy</item>
         <item>Honduras</item>
     </string-array>
+
     <string name="contactCountry">Country</string>
     <string name="promptSelectCountry">Select a Country</string>
-    <string name="contactId">Id</string>
+    <string name="contactId">ID</string>
 </resources>

@@ -6,8 +6,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import cr.ac.utn.appmovil.contactmanager.network.RetrofitClient
 import cr.ac.utn.appmovil.data.LoginResponse
-import cr.ac.utn.appmovil.network.RetrofitClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -42,22 +42,25 @@ class LoginActivity : AppCompatActivity() {
 
         val credentials = mapOf("id" to username, "password" to password)
 
-        RetrofitClient.authApi.validateAuth(credentials)
+        RetrofitClient.authInstance.validateAuth(credentials)
             .enqueue(object : Callback<LoginResponse> {
+
                 override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                     if (response.isSuccessful) {
                         val loginResponse = response.body()
                         if (loginResponse?.responseCode == 0) {
                             val technician = loginResponse.data
-                            val userName = "${technician?.name} ${technician?.lastName}"
+                            if (technician != null) {
+                                Toast.makeText(
+                                    this@LoginActivity,
+                                    getString(R.string.welcome_user, technician.name, technician.lastName),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                navigateToMainActivity("${technician.name} ${technician.lastName}")
+                            } else {
 
-                            Toast.makeText(
-                                this@LoginActivity,
-                                getString(R.string.welcome_user, technician?.name, technician?.lastName),
-                                Toast.LENGTH_SHORT
-                            ).show()
-
-                            navigateToMainActivity(userName)
+                                Toast.makeText(this@LoginActivity, getString(R.string.invalid_credentials), Toast.LENGTH_SHORT).show()
+                            }
                         } else {
                             val message = loginResponse?.message ?: getString(R.string.invalid_credentials)
                             Toast.makeText(this@LoginActivity, message, Toast.LENGTH_SHORT).show()
