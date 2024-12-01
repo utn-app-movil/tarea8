@@ -42,6 +42,16 @@
         app:layout_constraintTop_toBottomOf="@+id/main_btnContactList" />
 
     <Button
+        android:id="@+id/btnRecycleView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="@string/mnuRecycleView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_btnContactListCustom" />
+
+    <Button
         android:id="@+id/btngetDialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -53,16 +63,6 @@
         app:layout_constraintTop_toBottomOf="@+id/btnRecycleView" />
 
     <Button
-        android:id="@+id/btnRecycleView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:text="@string/mnuRecycleView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_btnContactListCustom" />
-
-    <Button
         android:id="@+id/btnDisplayCustomDialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -72,14 +72,54 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btngetDialog" />
+
     <Button
         android:id="@+id/btnViewLogins"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ver Logueos"
+        android:text="@string/view_logins"
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@+id/btnDisplayCustomDialog"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <Button
+        android:id="@+id/btnApiGetAllContacts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/api_get_all_contacts"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnViewLogins" />
+
+    <Button
+        android:id="@+id/btnApiCreateContact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/api_create_contact"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/btnApiGetAllContacts"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/btnApiUpdateContact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/api_update_contact"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/btnApiCreateContact"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/btnApiDeleteContact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/api_delete_contact"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/btnApiUpdateContact"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -40,8 +40,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun realizarLogin() {
-        val username = usernameEditText.text.toString()
-        val password = passwordEditText.text.toString()
+        val username = usernameEditText.text.toString().trim()
+        val password = passwordEditText.text.toString().trim()
 
         if (username.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, getString(R.string.empty_credentials), Toast.LENGTH_SHORT).show()
@@ -66,29 +66,47 @@ class LoginActivity : AppCompatActivity() {
                                 Toast.LENGTH_SHORT
                             ).show()
 
-                            // Registrar el evento de inicio de sesión
-                            val currentTime = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date())
-                            val loginEvent = LoginEvent(
-                                userId = username,
-                                loginTime = currentTime
-                            )
-                            dbManager.addLoginEvent(loginEvent)
+                            registrarEventoLogin(username)
 
-                            // Navegar al MainActivity después de un login exitoso
-                            val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                            startActivity(intent)
-                            finish() // Cierra el LoginActivity
+                            navegarAMainActivity()
                         } else {
-                            Toast.makeText(this@LoginActivity, loginResponse?.message, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this@LoginActivity,
+                                loginResponse?.message ?: getString(R.string.unknown_error),
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     } else {
-                        Toast.makeText(this@LoginActivity, getString(R.string.server_error), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this@LoginActivity,
+                            getString(R.string.server_error),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
 
                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                    Toast.makeText(this@LoginActivity, getString(R.string.connection_error, t.message), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@LoginActivity,
+                        getString(R.string.connection_error, t.message),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             })
+    }
+
+    private fun registrarEventoLogin(username: String) {
+        val currentTime = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date())
+        val loginEvent = LoginEvent(
+            userId = username,
+            loginTime = currentTime
+        )
+        dbManager.addLoginEvent(loginEvent)
+    }
+
+    private fun navegarAMainActivity() {
+        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }

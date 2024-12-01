@@ -45,6 +45,32 @@ class MainActivity : AppCompatActivity() {
         btnViewLogins.setOnClickListener {
             viewLoginEvents()
         }
+
+        val btnApiGetAllContacts: Button = findViewById(R.id.btnApiGetAllContacts)
+        btnApiGetAllContacts.setOnClickListener {
+            val intent = Intent(this, PersonActivity::class.java)
+            startActivity(intent)
+        }
+
+        val btnApiCreateContact: Button = findViewById(R.id.btnApiCreateContact)
+        btnApiCreateContact.setOnClickListener {
+            val intent = Intent(this, PersonDetailActivity::class.java)
+            startActivity(intent)
+        }
+
+        val btnApiUpdateContact: Button = findViewById(R.id.btnApiUpdateContact)
+        btnApiUpdateContact.setOnClickListener {
+            Toast.makeText(this, getString(R.string.select_contact_to_update), Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, PersonActivity::class.java)
+            startActivity(intent)
+        }
+
+        val btnApiDeleteContact: Button = findViewById(R.id.btnApiDeleteContact)
+        btnApiDeleteContact.setOnClickListener {
+            Toast.makeText(this, getString(R.string.select_contact_to_delete), Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, PersonActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -86,8 +112,8 @@ class MainActivity : AppCompatActivity() {
             .setCancelable(false)
             .setPositiveButton(getString(R.string.Ok)) { _, _ -> finish() }
             .setNegativeButton(getString(R.string.Cancel)) { dialog, _ -> dialog.cancel() }
-            .setNeutralButton("Neutral") { _, _ ->
-                Toast.makeText(this, "Clicking neutral button", Toast.LENGTH_LONG).show()
+            .setNeutralButton(getString(R.string.neutral_button)) { _, _ ->
+                Toast.makeText(this, getString(R.string.neutral_button_clicked), Toast.LENGTH_LONG).show()
             }
 
         val alert = dialogBuilder.create()
