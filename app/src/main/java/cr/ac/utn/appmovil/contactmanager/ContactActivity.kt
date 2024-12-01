@@ -1,88 +1,79 @@
 package cr.ac.utn.appmovil.contactmanager
 
-import android.content.DialogInterface
-import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
-import android.net.Uri
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.view.View
 import android.widget.*
-import cr.ac.utn.appmovil.identities.Contact
-import cr.ac.utn.appmovil.model.ContactModel
-import cr.ac.utn.appmovil.util.EXTRA_MESSAGE_CONTACTID
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.FileProvider
-import java.io.File
-import java.lang.Exception
-
-private const val FILE_NAME = "photo.jpg"
-private const val PROVIDER = "cr.ac.utn.appmovil.contactmanager.fileprovider"
+import androidx.appcompat.app.AppCompatActivity
+import cr.ac.utn.appmovil.model.ApiContact
+import cr.ac.utn.appmovil.network.ApiContactClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ContactActivity : AppCompatActivity() {
 
-    private lateinit var txtId: EditText
-    lateinit var txtName: EditText
-    lateinit var txtLastName: EditText
-    lateinit var txtPhone: EditText
-    lateinit var txtEmail: EditText
-    lateinit var txtAddress: EditText
-    private val takePicture = 100
-    private val selectImage = 101    
-    lateinit var imgPhoto: ImageView
-    lateinit var filePhoto: File
-    lateinit var spCountries: Spinner
-    lateinit var countries: List<String>
-    lateinit var contactMod: ContactModel
+    private lateinit var txtPersonId: EditText
+    private lateinit var txtName: EditText
+    private lateinit var txtLastName: EditText
+    private lateinit var txtBirthdate: EditText
+    private lateinit var spGender: Spinner
+    private lateinit var spProvince: Spinner
+
     private var isEditionMode: Boolean = false
-    private lateinit var menuitemDelete: MenuItem
+    private var currentContactId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_contact)
 
-        txtId = findViewById<EditText>(R.id.txtContact_Id)
-        txtName = findViewById<EditText>(R.id.txtContactName)
-        txtLastName = findViewById<EditText>(R.id.txtContactLastName)
-        txtPhone = findViewById<EditText>(R.id.txtContactPhone)
-        txtEmail = findViewById<EditText>(R.id.txtContactEmail)
-        txtAddress = findViewById<EditText>(R.id.txtContactAddress)
-        imgPhoto = findViewById(R.id.imgPhoto_Contact)
-        spCountries = findViewById<Spinner>(R.id.spCountries_contact)
+        // Inicializar vistas
+        txtPersonId = findViewById(R.id.txtPersonId)
+        txtName = findViewById(R.id.txtContactName)
+        txtLastName = findViewById(R.id.txtContactLastName)
+        txtBirthdate = findViewById(R.id.txtBirthdate)
+        spGender = findViewById(R.id.spGender)
+        spProvince = findViewById(R.id.spProvince)
 
-        contactMod = ContactModel(this)
-        loadCountries()
-
-        spCountries.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                Toast.makeText(this@ContactActivity, countries[position].toString(), Toast.LENGTH_SHORT).show()
+        // Validar formato de fecha (YYYYMMDD)
+        txtBirthdate.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                val cleanString = s.toString().replace(Regex("[^\\d]"), "").take(8)
+                txtBirthdate.removeTextChangedListener(this)
+                txtBirthdate.setText(cleanString)
+                txtBirthdate.setSelection(cleanString.length)
+                txtBirthdate.addTextChangedListener(this)
             }
+        })
 
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                // write code to perform some action
-            }
+        // Configurar Spinner de género
+        val genders = listOf("M", "F")
+        val genderAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, genders)
+        genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spGender.adapter = genderAdapter
+
+        // Configurar Spinner de provincias
+        val provinces = listOf(
+            "1 - San Jose", "2 - Alajuela", "3 - Cartago", "4 - Heredia",
+            "5 - Guanacaste", "6 - Puntarenas", "7 - Limon"
+        )
+        val provinceAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, provinces)
+        provinceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spProvince.adapter = provinceAdapter
+
+        // Verificar si estamos editando un contacto
+        val contactId = intent.getIntExtra("EXTRA_CONTACT_ID", -1)
+        if (contactId != -1) {
+            isEditionMode = true
+            currentContactId = contactId
+            loadEditContact(contactId)
         }
-
-        val btnTakePhoto: Button = findViewById<Button>(R.id.btnTakePicture)
-        btnTakePhoto.setOnClickListener(View.OnClickListener { view ->
-            TakePhoto()
-        })
-
-        val btnSelectPhoto: Button = findViewById<Button>(R.id.btnSelectPhoto)
-        btnSelectPhoto.setOnClickListener(View.OnClickListener { view ->
-           selectPhoto()
-        })
-
-        val contactId = intent.getStringExtra(EXTRA_MESSAGE_CONTACTID)
-        if (contactId != null && contactId != "") isEditionMode = loadEditContact(contactId.toString())
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -92,12 +83,12 @@ class ContactActivity : AppCompatActivity() {
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-        menu?.findItem(R.id.mnuDelete)?.setVisible(isEditionMode)
+        menu?.findItem(R.id.mnuDelete)?.isVisible = isEditionMode
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId){
+        return when (item.itemId) {
             R.id.mnuSave -> {
                 saveContact()
                 true
@@ -108,140 +99,129 @@ class ContactActivity : AppCompatActivity() {
             }
             R.id.mnuCancel -> {
                 cleanScreen()
-                return true
+                true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    fun saveContact(){
-        try {
-            val contact = Contact()
-            contact.Id = txtId.text.toString()
-            contact.Name = txtName.text.toString()
-            contact.LastName = txtLastName.text.toString()
-            contact.Phone = txtPhone.text.toString()?.toInt()!!
-            contact.Email = txtEmail.text.toString()
-            contact.Address = txtAddress.text.toString()
-            contact.Photo = (imgPhoto?.drawable as BitmapDrawable).bitmap
-            contact.Country = spCountries.selectedItem.toString()
+    private fun saveContact() {
+        // Validar los datos
+        val personId = txtPersonId.text.toString().toIntOrNull()
+        val name = txtName.text.toString().trim()
+        val lastName = txtLastName.text.toString().trim()
+        val birthdateInput = txtBirthdate.text.toString().trim()
+        val gender = spGender.selectedItem.toString()
+        val provinceCode = spProvince.selectedItem.toString().split(" - ")[0].toIntOrNull() ?: 0
 
-            if (dataValidation(contact)){
-                if (!isEditionMode)
-                    contactMod.addContact(contact)
-                else
-                    contactMod.updateContact(contact)
+        // Validar el formato de la fecha
+        val birthdate = if (birthdateInput.length == 8) {
+            "${birthdateInput.substring(0, 4)}-${birthdateInput.substring(4, 6)}-${birthdateInput.substring(6, 8)}"
+        } else {
+            ""
+        }
 
-                cleanScreen()
-                Toast.makeText(this, getString(R.string.msgSave).toString(),Toast.LENGTH_LONG).show()
-            }else{
-                Toast.makeText(this, getString(R.string.msgInvalidData).toString(),Toast.LENGTH_LONG).show()
-            }
-        }catch (e: Exception){
-            Toast.makeText(this, e.message.toString(),Toast.LENGTH_LONG).show()
+        if (personId == null || name.isEmpty() || lastName.isEmpty() || birthdate.isEmpty() || gender.isEmpty()) {
+            Toast.makeText(this, "Por favor complete todos los campos correctamente", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val contact = ApiContact(personId, name, lastName, provinceCode, birthdate, gender)
+
+        // Crear o actualizar contacto según el modo
+        if (isEditionMode) {
+            ApiContactClient.api.updateContact(contact).enqueue(object : Callback<Void> {
+                override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                    if (response.isSuccessful) {
+                        Toast.makeText(this@ContactActivity, "Contacto actualizado", Toast.LENGTH_SHORT).show()
+                        finish()
+                    } else {
+                        Toast.makeText(this@ContactActivity, "Error al actualizar contacto", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<Void>, t: Throwable) {
+                    Toast.makeText(this@ContactActivity, t.message, Toast.LENGTH_LONG).show()
+                }
+            })
+        } else {
+            ApiContactClient.api.createContact(contact).enqueue(object : Callback<Void> {
+                override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                    if (response.isSuccessful) {
+                        Toast.makeText(this@ContactActivity, "Contacto creado", Toast.LENGTH_SHORT).show()
+                        finish()
+                    } else {
+                        Toast.makeText(this@ContactActivity, "Error al crear contacto", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<Void>, t: Throwable) {
+                    Toast.makeText(this@ContactActivity, t.message, Toast.LENGTH_LONG).show()
+                }
+            })
         }
     }
 
-    fun dataValidation(contact: Contact): Boolean{
-        return contact.Id.isNotEmpty() && contact.Name.isNotEmpty() &&
-                contact.LastName.isNotEmpty() && contact.Address.isNotEmpty() &&
-                contact.Email.isNotEmpty() &&
-                (contact.Phone != null && contact.Phone > 0)
+    private fun confirmDelete() {
+        val dialog = AlertDialog.Builder(this)
+            .setTitle("Eliminar contacto")
+            .setMessage("¿Está seguro de que desea eliminar este contacto?")
+            .setPositiveButton("Sí") { _, _ ->
+                currentContactId?.let { id ->
+                    ApiContactClient.api.deleteContact(ApiContact(id, "", "", 0, "", "")).enqueue(object : Callback<Void> {
+                        override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                            if (response.isSuccessful) {
+                                Toast.makeText(this@ContactActivity, "Contacto eliminado", Toast.LENGTH_SHORT).show()
+                                finish()
+                            } else {
+                                Toast.makeText(this@ContactActivity, "Error al eliminar contacto", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+
+                        override fun onFailure(call: Call<Void>, t: Throwable) {
+                            Toast.makeText(this@ContactActivity, t.message, Toast.LENGTH_LONG).show()
+                        }
+                    })
+                }
+            }
+            .setNegativeButton("No", null)
+            .create()
+
+        dialog.show()
     }
 
-    fun cleanScreen(){
-        txtId.setText("")
-        txtName.setText("")
-        txtLastName.setText("")
-        txtPhone.setText("")
-        txtEmail.setText("")
-        txtAddress.setText("")
-        txtId.isEnabled = true
+    private fun cleanScreen() {
+        txtPersonId.text.clear()
+        txtName.text.clear()
+        txtLastName.text.clear()
+        txtBirthdate.text.clear()
+        spGender.setSelection(0)
+        spProvince.setSelection(0)
         isEditionMode = false
+        currentContactId = null
         invalidateOptionsMenu()
     }
 
-    fun loadEditContact(id: String): Boolean{
-        try{
-            val contact = contactMod.getContact(id)
-            txtId.setText(contact.Id)
-            txtName.setText(contact.Name)
-            txtLastName.setText(contact.LastName)
-            txtPhone.setText(contact.Phone.toString())
-            txtEmail.setText(contact.Email)
-            txtAddress.setText(contact.Address)
-            spCountries.setSelection(countries.indexOf(contact.Country.trim()))
-            imgPhoto.setImageBitmap(contact.Photo)
-            isEditionMode = true
-            txtId.isEnabled = false
+    private fun loadEditContact(id: Int) {
+        ApiContactClient.api.getContactById(id).enqueue(object : Callback<ApiContact> {
+            override fun onResponse(call: Call<ApiContact>, response: Response<ApiContact>) {
+                if (response.isSuccessful) {
+                    response.body()?.let { contact ->
+                        txtPersonId.setText(contact.personId.toString())
+                        txtName.setText(contact.name)
+                        txtLastName.setText(contact.lastName)
+                        txtBirthdate.setText(contact.birthdate.replace("-", ""))
+                        spGender.setSelection(if (contact.gender == "M") 0 else 1)
+                        spProvince.setSelection(contact.provinceCode - 1)
+                    }
+                } else {
+                    Toast.makeText(this@ContactActivity, "Error al cargar contacto", Toast.LENGTH_SHORT).show()
+                }
+            }
 
-            return true
-        }catch (e: Exception){
-            Toast.makeText(this, e.message.toString(),Toast.LENGTH_LONG).show()
-        }
-        return false
-    }
-
-    fun confirmDelete(){
-        val dialogBuilder = AlertDialog.Builder(this)
-
-        dialogBuilder.setMessage(getString(R.string.ConfirmDelete).toString())
-            .setCancelable(false)
-            .setPositiveButton(getString(R.string.Ok), DialogInterface.OnClickListener {
-                    dialog, id ->
-
-                contactMod.removeContact(txtId.text.toString())
-                cleanScreen()
-                Toast.makeText(this, getString(R.string.msgDelete).toString(), Toast.LENGTH_LONG).show()
-
-            })
-            .setNegativeButton(getString(R.string.Cancel), DialogInterface.OnClickListener {
-                    dialog, id -> dialog.cancel()
-            })
-
-        val alert = dialogBuilder.create()
-        alert.setTitle(getString(R.string.TitleDialogQuestion).toString())
-        alert.show()
-    }
-
-    fun selectPhoto(){
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
-        intent.type = "image/*"
-        startActivityForResult(intent, selectImage)
-    }
-
-    fun TakePhoto(){
-        val takePhotoIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        filePhoto = getPhotoFile(FILE_NAME)
-        val providerFile = FileProvider.getUriForFile(this,PROVIDER, filePhoto)
-        takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, providerFile)
-        startActivityForResult(takePhotoIntent, takePicture)
-    }
-
-    private fun getPhotoFile(fileName: String): File{
-        val directoryStorage = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile(fileName, ".jpg", directoryStorage)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (resultCode == RESULT_OK && requestCode == selectImage){            
-            val imageUri = data?.data
-            imgPhoto.setImageURI(imageUri)
-        }
-        else if (resultCode == RESULT_OK && requestCode == takePicture){
-            val takenPhoto = BitmapFactory.decodeFile(filePhoto.absolutePath)
-            imgPhoto.setImageBitmap(takenPhoto)
-        }
-    }
-
-    fun loadCountries(){
-        countries = resources.getStringArray(R.array.Countries).toList()
-        if (spCountries != null) {
-            val adapter = ArrayAdapter.createFromResource(this, R.array.Countries, android.R.layout.simple_spinner_item)
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            spCountries.adapter = adapter
-        }
+            override fun onFailure(call: Call<ApiContact>, t: Throwable) {
+                Toast.makeText(this@ContactActivity, t.message, Toast.LENGTH_LONG).show()
+            }
+        })
     }
 }
