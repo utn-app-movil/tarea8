@@ -15,14 +15,14 @@ import kotlinx.coroutines.launch
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var dbHelper: DBHelper // Declarar DBHelper
+    private lateinit var dbHelper: DBHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        dbHelper = DBHelper(this) // Inicializar DBHelper
+        dbHelper = DBHelper(this)
 
         binding.btnLogin.setOnClickListener {
             val id = binding.etUserId.text?.toString()?.trim() ?: ""
@@ -47,10 +47,8 @@ class LoginActivity : AppCompatActivity() {
                                         Toast.LENGTH_SHORT
                                     ).show()
 
-                                    // Guardar autenticación en la base de datos
                                     dbHelper.insertAuthentication(body.data.name)
 
-                                    // Redirigir a MainActivity
                                     util.openActivity(
                                         this@LoginActivity,
                                         MainActivity::class.java,

@@ -16,13 +16,10 @@ class LoginHistoryActivity : AppCompatActivity() {
         binding = ActivityLoginHistoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Inicializar la base de datos
         val dbHelper = DBHelper(this)
 
-        // Obtener la lista de autenticaciones
         val loginHistory = dbHelper.getAllAuthentications()
 
-        // Configurar RecyclerView
         val recyclerView: RecyclerView = binding.recyclerViewLoginHistory
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = LoginHistoryAdapter(loginHistory)

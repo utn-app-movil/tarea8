@@ -41,10 +41,14 @@ class MainActivity : AppCompatActivity() {
             DisplayCustomeDialog()
         })
 
-        // Nuevo botón para ver el historial de autenticaciones
         val btnViewLogins: Button = findViewById<Button>(R.id.main_btnViewLogins)
         btnViewLogins.setOnClickListener(View.OnClickListener { view ->
             openActivity(LoginHistoryActivity::class.java) // Redirige a LoginHistoryActivity
+        })
+
+        val btnApiContact: Button = findViewById<Button>(R.id.main_btnApiContact)
+        btnApiContact.setOnClickListener(View.OnClickListener { view ->
+            openActivity(ApiContactActivity::class.java) // Redirige a ApiContactActivity
         })
     }
 

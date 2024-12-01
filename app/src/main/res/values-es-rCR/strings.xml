@@ -42,7 +42,6 @@
     <string name="contactCountry">País</string>
     <string name="promptSelectCountry">Seleccione un país</string>
     <string name="contactId">ID Contacto</string>
-
     <string name="fill_all_fields">Por favor, complete todos los campos</string>
     <string name="login_successful">¡Inicio de sesión exitoso!</string>
     <string name="invalid_credentials">Credenciales inválidas, intente nuevamente</string>
@@ -54,4 +53,39 @@
     <string name="login_button_text">Iniciar Sesión</string>
     <string name="mnu_view_logins">Ver Inicios de Sesión</string>
     <string name="login_history_title">Historial de Inicios de Sesión</string>
+    <string name="contact_created_success">Contacto creado exitosamente</string>
+    <string name="error_creating_contact">Error al crear contacto: %1$s</string>
+    <string name="enter_valid_id">Por favor ingrese un ID válido</string>
+    <string name="contact_not_found">Contacto no encontrado</string>
+    <string name="error_fetching_contact">Error al obtener contacto: %1$s</string>
+    <string name="no_contacts_available">No hay contactos disponibles</string>
+    <string name="error_fetching_contacts">Error al obtener contactos: %1$s</string>
+    <string name="error_generic">Error: %1$s</string>
+    <string name="complete_all_fields">Por favor complete todos los campos</string>
+    <string name="contact_updated_successfully">Contacto actualizado correctamente</string>
+    <string name="error_updating_contact">Error al actualizar contacto</string>
+    <string name="contact_deleted_successfully">Contacto eliminado correctamente</string>
+    <string name="error_deleting_contact">Error al eliminar contacto: %1$s</string>
+    <string name="complete_all_fields_valid_values">Por favor, completa todos los campos con valores válidos</string>
+    <string name="unknown_error">Error desconocido</string>
+    <string name="error_no_contact_received">No se recibió información del contacto</string>
+    <string name="error_updating_contact2">Error al actualizar contacto: %1$s</string>
+    <string name="title_api_contact_activity">Gestión de Contactos</string>
+    <string name="hint_person_id">ID de Persona</string>
+    <string name="hint_name">Nombre</string>
+    <string name="hint_last_name">Apellido</string>
+    <string name="hint_province_code">Código de Provincia</string>
+    <string name="hint_birthdate">Fecha de Nacimiento (AAAA-MM-DD)</string>
+    <string name="hint_gender">Género (M/F)</string>
+    <string name="button_create_contact">Crear Contacto</string>
+    <string name="button_get_contact_by_id">Obtener Contacto por ID</string>
+    <string name="button_get_all_contacts">Consultar Todos los Contactos</string>
+    <string name="title_api_contact_detail">Detalles del Contacto</string>
+    <string name="button_update_contact">Actualizar Contacto</string>
+    <string name="button_delete_contact">Eliminar Contacto</string>
+    <string name="title_contact_detail">Detalles del Contacto</string>
+    <string name="title_contact_list">Lista de Contactos</string>
+    <string name="contact_name">Nombre del Contacto</string>
+    <string name="contact_details">Detalles del Contacto</string>
+    <string name="btn_manage_contacts">Gestionar Contactos (API)</string>
 </resources>

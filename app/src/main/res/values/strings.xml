@@ -42,7 +42,6 @@
     <string name="contactCountry">Country</string>
     <string name="promptSelectCountry">Select a Country</string>
     <string name="contactId">Id</string>
-
     <string name="fill_all_fields">Please fill in all fields</string>
     <string name="login_successful">Login successful!</string>
     <string name="invalid_credentials">Invalid credentials, please try again</string>
@@ -54,4 +53,39 @@
     <string name="login_button_text">Log In</string>
     <string name="mnu_view_logins">View Logins</string>
     <string name="login_history_title">Login History</string>
+    <string name="contact_created_success">Contact created successfully</string>
+    <string name="error_creating_contact">Error creating contact: %1$s</string>
+    <string name="enter_valid_id">Please enter a valid ID</string>
+    <string name="contact_not_found">Contact not found</string>
+    <string name="error_fetching_contact">Error fetching contact: %1$s</string>
+    <string name="no_contacts_available">No contacts available</string>
+    <string name="error_fetching_contacts">Error fetching contacts: %1$s</string>
+    <string name="error_generic">Error: %1$s</string>
+    <string name="complete_all_fields">Please complete all fields</string>
+    <string name="contact_updated_successfully">Contact updated successfully</string>
+    <string name="error_updating_contact">Error updating contact</string>
+    <string name="contact_deleted_successfully">Contact deleted successfully</string>
+    <string name="error_deleting_contact">Error deleting contact: %1$s</string>
+    <string name="complete_all_fields_valid_values">Please complete all fields with valid values</string>
+    <string name="unknown_error">Unknown error</string>
+    <string name="error_no_contact_received">No contact information received</string>
+    <string name="error_updating_contact2">Error updating contact: %1$s</string>
+    <string name="title_api_contact_activity">Contact Management</string>
+    <string name="hint_person_id">Person ID</string>
+    <string name="hint_name">Name</string>
+    <string name="hint_last_name">Last Name</string>
+    <string name="hint_province_code">Province Code</string>
+    <string name="hint_birthdate">Birthdate (YYYY-MM-DD)</string>
+    <string name="hint_gender">Gender (M/F)</string>
+    <string name="button_create_contact">Create Contact</string>
+    <string name="button_get_contact_by_id">Get Contact by ID</string>
+    <string name="button_get_all_contacts">Get All Contacts</string>
+    <string name="title_api_contact_detail">Contact Details</string>
+    <string name="button_update_contact">Update Contact</string>
+    <string name="button_delete_contact">Delete Contact</string>
+    <string name="title_contact_detail">Contact Details</string>
+    <string name="title_contact_list">Contact List</string>
+    <string name="contact_name">Contact Name</string>
+    <string name="contact_details">Contact Details</string>
+    <string name="btn_manage_contacts">Manage Contacts (API)</string>
 </resources>

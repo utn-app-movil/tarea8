@@ -13,6 +13,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Contactmanager">
         <activity
+            android:name=".ApiContactEditActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ApiContactDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ApiContactListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ApiContactActivity"
+            android:exported="false" />
+        <activity
             android:name=".LoginHistoryActivity"
             android:exported="false" />
         <activity
