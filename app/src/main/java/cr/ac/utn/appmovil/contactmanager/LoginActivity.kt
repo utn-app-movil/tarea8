@@ -27,19 +27,18 @@ class LoginActivity : AppCompatActivity() {
         loginButton = findViewById(R.id.loginButton)
 
         loginButton.setOnClickListener {
-            performLogin()
+            val username = usernameEditText.text.toString().trim()
+            val password = passwordEditText.text.toString().trim()
+
+            if (username.isNotEmpty() && password.isNotEmpty()) {
+                performLogin(username, password)
+            } else {
+                Toast.makeText(this, "Por favor ingresa tus datos", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
-    private fun performLogin() {
-        val username = usernameEditText.text.toString()
-        val password = passwordEditText.text.toString()
-
-        if (username.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, getString(R.string.empty_credentials), Toast.LENGTH_SHORT).show()
-            return
-        }
-
+    private fun performLogin(username: String, password: String) {
         val credentials = mapOf("id" to username, "password" to password)
 
         RetrofitClient.authInstance.validateAuth(credentials)
@@ -50,32 +49,27 @@ class LoginActivity : AppCompatActivity() {
                         val loginResponse = response.body()
                         if (loginResponse?.responseCode == 0) {
                             val technician = loginResponse.data
-                            if (technician != null) {
+                            if (technician != null && technician.isActive) {
                                 Toast.makeText(
                                     this@LoginActivity,
-                                    getString(R.string.welcome_user, technician.name, technician.lastName),
+                                    "Bienvenido, ${technician.name} ${technician.lastName}",
                                     Toast.LENGTH_SHORT
                                 ).show()
                                 navigateToMainActivity("${technician.name} ${technician.lastName}")
                             } else {
-
-                                Toast.makeText(this@LoginActivity, getString(R.string.invalid_credentials), Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this@LoginActivity, loginResponse.message, Toast.LENGTH_SHORT).show()
                             }
                         } else {
-                            val message = loginResponse?.message ?: getString(R.string.invalid_credentials)
+                            val message = loginResponse?.message ?: "Error desconocido"
                             Toast.makeText(this@LoginActivity, message, Toast.LENGTH_SHORT).show()
                         }
                     } else {
-                        Toast.makeText(this@LoginActivity, getString(R.string.server_error), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@LoginActivity, "Error en el servidor", Toast.LENGTH_SHORT).show()
                     }
                 }
 
                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                    Toast.makeText(
-                        this@LoginActivity,
-                        getString(R.string.connection_error, t.message ?: "Unknown error"),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(this@LoginActivity, "Error de conexión: ${t.message}", Toast.LENGTH_SHORT).show()
                 }
             })
     }
