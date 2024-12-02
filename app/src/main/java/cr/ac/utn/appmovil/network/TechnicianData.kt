@@ -1,4 +1,4 @@
-package cr.ac.utn.appmovil.contactmanager.network
+package cr.ac.utn.appmovil.network
 
 data class TechnicianData(
     val id: String,

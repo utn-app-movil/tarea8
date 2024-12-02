@@ -1,6 +1,6 @@
 package cr.ac.utn.appmovil.data
 
-import cr.ac.utn.appmovil.contactmanager.network.TechnicianData
+import cr.ac.utn.appmovil.network.TechnicianData
 
 data class LoginResponse(
     val data: TechnicianData?,

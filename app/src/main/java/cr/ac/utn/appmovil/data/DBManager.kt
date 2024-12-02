@@ -19,7 +19,12 @@ class DBManager(context: Context): SQLiteOpenHelper(context, DATABASE_NAME, null
         const val COLUMN_ADDRESS = "address"
         const val COLUMN_COUNTRY = "country"
         const val COLUMN_PHOTO = "photo"
+        const val TABLE_LOGIN_EVENTS = "login_events"
+        const val COLUMN_EVENT_ID = "event_id"
+        const val COLUMN_USER_ID = "user_id"
+        const val COLUMN_LOGIN_TIME = "login_time"
     }
+
 
     private val SQL_CREATE_ENTRIES = """
         CREATE TABLE $TABLE_CONTACTS (

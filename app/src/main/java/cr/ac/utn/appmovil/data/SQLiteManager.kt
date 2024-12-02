@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import cr.ac.utn.appmovil.identities.Contact
+import cr.ac.utn.appmovil.identities.LoginEvent
 import cr.ac.utn.appmovil.interfaces.IDBManager
 
 class SQLiteManager(context: Context): IDBManager {
@@ -109,5 +110,29 @@ class SQLiteManager(context: Context): IDBManager {
         }
         cursor?.close()
         return contact
+    }
+    fun getAllLoginEvents(): List<LoginEvent> {
+        val loginEvents = mutableListOf<LoginEvent>()
+        val cursor = db?.query(
+            DBManager.TABLE_LOGIN_EVENTS,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "${DBManager.COLUMN_EVENT_ID} DESC"
+        )
+        with(cursor) {
+            while (this != null && moveToNext()) {
+                val loginEvent = LoginEvent(
+                    eventId = getInt(getColumnIndexOrThrow(DBManager.COLUMN_ID)),
+                    userId = getString(getColumnIndexOrThrow(DBManager.COLUMN_USER_ID)),
+                    loginTime = getString(getColumnIndexOrThrow(DBManager.COLUMN_LOGIN_TIME))
+                )
+                loginEvents.add(loginEvent)
+            }
+        }
+        cursor?.close()
+        return loginEvents
     }
 }

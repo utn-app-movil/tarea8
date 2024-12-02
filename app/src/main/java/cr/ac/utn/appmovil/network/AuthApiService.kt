@@ -1,4 +1,4 @@
-package cr.ac.utn.appmovil.contactmanager.network
+package cr.ac.utn.appmovil.network
 
 import cr.ac.utn.appmovil.data.LoginResponse
 import retrofit2.Call

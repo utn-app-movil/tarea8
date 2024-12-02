@@ -6,7 +6,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import cr.ac.utn.appmovil.contactmanager.network.RetrofitClient
+import cr.ac.utn.appmovil.network.RetrofitClient
 import cr.ac.utn.appmovil.data.LoginResponse
 import retrofit2.Call
 import retrofit2.Callback

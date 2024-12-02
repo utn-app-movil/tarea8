@@ -1,4 +1,4 @@
-package cr.ac.utn.appmovil.contactmanager.network
+package cr.ac.utn.appmovil.network
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

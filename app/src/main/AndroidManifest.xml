@@ -2,11 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cr.ac.utn.appmovil.contactmanager">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -17,13 +17,13 @@
         android:theme="@style/Theme.Contactmanager">
 
         <provider
-                android:authorities="cr.ac.utn.appmovil.contactmanager.fileprovider"
-                android:name="androidx.core.content.FileProvider"
-                android:exported="false"
-                android:grantUriPermissions="true">
+            android:authorities="cr.ac.utn.appmovil.contactmanager.fileprovider"
+            android:name="androidx.core.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_file"/>
+                android:resource="@xml/provider_file" />
         </provider>
 
         <activity
@@ -34,6 +34,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+
         <activity
             android:name=".ContactListCustomActivity"
             android:exported="true"
@@ -42,6 +43,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+
         <activity
             android:name=".ContactListActivity"
             android:exported="true"
@@ -50,16 +52,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+
         <activity
             android:name=".ContactActivity"
-            android:exported="true"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
-        <activity
-            android:name=".MainActivity"
             android:exported="true"
             android:parentActivityName=".MainActivity">
             <meta-data
@@ -69,13 +64,33 @@
 
         <activity
             android:name=".LoginActivity"
+            android:exported="true"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+
+        <activity
+            android:name=".ContactAPIActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".ContactAPIDetail"
+            android:exported="true" />
+
+        <activity
+            android:name=".LoginEventsActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
 
+    </application>
 </manifest>
