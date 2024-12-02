@@ -10,7 +10,7 @@ interface PersonApiService {
     fun getAllPeople(): Call<ApiResponse<List<Person>>>
 
     @GET("people/{id}")
-    fun getPerson(@Path("id") id: String): Call<ApiResponse<Person>>
+    fun getPersonById(@Path("id") id: Long): Call<ApiResponse<List<Person>>>
 
     @POST("people/")
     fun createPerson(@Body person: Person): Call<ApiResponse<Person>>

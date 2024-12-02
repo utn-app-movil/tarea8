@@ -109,4 +109,10 @@
     <string name="detail">Detail</string>
     <string name="error_updating_person">Error al actualizar persona: Code %1$d, %2$s.</string>
     <string name="delete_mnu">Borrar</string>
+    <string name="search_by_id">Search by ID</string>
+    <string name="search">Search</string>
+    <string name="enter_id_to_search">Please enter an ID to search</string>
+    <string name="person_not_found">Person not found</string>
+    <string name="invalid_id_format">Invalid ID format</string>
+
 </resources>
