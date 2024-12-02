@@ -25,20 +25,7 @@ object MemoryManager: IDBManager {
     override fun getAll(): List<Contact> = contactList.toList()
 
     override fun getById(id: String): Contact? {
-        try {
-            var result = contactList.filter { (it.Id) == id }
-            return if(!result.any()) null else result[0]
-        }catch (e: Exception){
-            throw e
-        }
-    }
-
-    override fun getByFullName(fullName: String): Contact? {
-        try {
-            var result = contactList.filter { (it.FullName) == fullName }
-            return if(!result.any()) null else result[0]
-        }catch (e: Exception){
-            throw e
-        }
+        var result = contactList.filter { it.Id.trim().equals(id.trim()) }
+        return if (result.any()) result[0] else null
     }
 }

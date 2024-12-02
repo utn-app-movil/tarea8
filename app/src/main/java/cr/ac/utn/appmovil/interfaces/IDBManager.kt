@@ -8,5 +8,4 @@ interface IDBManager {
     fun remove (id: String) //delete
     fun getAll(): List<Contact> //Return all contacts
     fun getById(id: String): Contact? //Search a specific contact by id, if id does not exist it will return null value
-    fun getByFullName(fullName: String): Contact?// Search a specific contact by fullName, if does not exist it will return null value
 }
