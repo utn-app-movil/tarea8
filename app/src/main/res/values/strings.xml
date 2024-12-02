@@ -97,10 +97,10 @@
     <string name="error_deleting_contact">Error deleting person.</string>
     <string name="fill_required_fields">Please complete all required fields.</string>
     <string name="data_processing_error">Error processing data: %1$s.</string>
-    <string name="api_get_all_contacts">API: Get Contacts</string>
-    <string name="api_create_contact">API: Create Contact</string>
-    <string name="api_update_contact">API: Update Contact</string>
-    <string name="api_delete_contact">API: Delete Contact</string>
+    <string name="api_get_all_contacts">Get Contacts</string>
+    <string name="api_create_contact">Create Contact</string>
+    <string name="api_update_contact">Update Contact</string>
+    <string name="api_delete_contact">Delete Contact</string>
     <string name="contact_id_hint">Person ID</string>
     <string name="name_hint">Name</string>
     <string name="last_name_hint">Last Name</string>
