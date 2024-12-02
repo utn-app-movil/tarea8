@@ -3,6 +3,7 @@ package cr.ac.utn.appmovil.contactmanager
 import ContactApiService
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import android.widget.EditText
 import android.widget.Button
@@ -18,7 +19,7 @@ import retrofit2.Response
 
 class ContactAPIActivity : AppCompatActivity(), ContactAPIAdapter.OnItemClickListener {
 
-    private lateinit var ContactApiService: ContactApiService
+    private lateinit var contactApiService: ContactApiService
     private lateinit var adapter: ContactAPIAdapter
     private var peopleList = mutableListOf<Contact>()
 
@@ -34,7 +35,7 @@ class ContactAPIActivity : AppCompatActivity(), ContactAPIAdapter.OnItemClickLis
         adapter = ContactAPIAdapter(peopleList, this)
         recyclerView.adapter = adapter
 
-        ContactApiService = ApiContact.retrofit.create(ContactApiService::class.java)
+        contactApiService = ApiContact.retrofit.create(ContactApiService::class.java)
 
         searchIdEditText = findViewById(R.id.searchIdEditText)
         searchButton = findViewById(R.id.searchButton)
@@ -43,7 +44,7 @@ class ContactAPIActivity : AppCompatActivity(), ContactAPIAdapter.OnItemClickLis
             val id = searchIdEditText.text.toString().trim()
             if (id.isNotEmpty()) {
                 try {
-                    searchContactbyId(id.toLong())
+                    searchContactById(id.toLong())
                 } catch (e: NumberFormatException) {
                     Toast.makeText(
                         this,
@@ -63,15 +64,15 @@ class ContactAPIActivity : AppCompatActivity(), ContactAPIAdapter.OnItemClickLis
         loadPeople()
     }
 
-    private fun searchContactbyId(id: Long) {
-        ContactApiService.getContactById(id).enqueue(object : Callback<ApiResponse<List<Contact>>> {
+    private fun searchContactById(id: Long) {
+        contactApiService.getContactById(id).enqueue(object : Callback<ApiResponse<List<Contact>>> {
             override fun onResponse(
                 call: Call<ApiResponse<List<Contact>>>,
                 response: Response<ApiResponse<List<Contact>>>
             ) {
                 if (response.isSuccessful) {
                     val people = response.body()?.data
-                    if (people != null && people.isNotEmpty()) {
+                    if (!people.isNullOrEmpty()) {
                         peopleList.clear()
                         peopleList.addAll(people)
                         adapter.notifyDataSetChanged()
@@ -83,18 +84,20 @@ class ContactAPIActivity : AppCompatActivity(), ContactAPIAdapter.OnItemClickLis
                         ).show()
                     }
                 } else {
+                    Log.e("API_ERROR", "Response error: ${response.code()} - ${response.message()}")
                     Toast.makeText(
                         this@ContactAPIActivity,
-                        getString(R.string.error_loading_data),
+                        "Error fetching contact: ${response.message()}",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
             }
 
             override fun onFailure(call: Call<ApiResponse<List<Contact>>>, t: Throwable) {
+                Log.e("API_ERROR", "Failure: ${t.message}")
                 Toast.makeText(
                     this@ContactAPIActivity,
-                    getString(R.string.connection_error, t.message),
+                    "Connection error: ${t.message}",
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -102,7 +105,7 @@ class ContactAPIActivity : AppCompatActivity(), ContactAPIAdapter.OnItemClickLis
     }
 
     private fun loadPeople() {
-        ContactApiService.getAllContacts().enqueue(object : Callback<ApiResponse<List<Contact>>> {
+        contactApiService.getAllContacts().enqueue(object : Callback<ApiResponse<List<Contact>>> {
             override fun onResponse(
                 call: Call<ApiResponse<List<Contact>>>,
                 response: Response<ApiResponse<List<Contact>>>
@@ -112,8 +115,15 @@ class ContactAPIActivity : AppCompatActivity(), ContactAPIAdapter.OnItemClickLis
                         peopleList.clear()
                         peopleList.addAll(it)
                         adapter.notifyDataSetChanged()
+                    } ?: run {
+                        Toast.makeText(
+                            this@ContactAPIActivity,
+                            getString(R.string.no_people_found),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 } else {
+                    Log.e("API_ERROR", "Response error: ${response.code()} - ${response.message()}")
                     Toast.makeText(
                         this@ContactAPIActivity,
                         getString(R.string.error_loading_people),
@@ -123,9 +133,10 @@ class ContactAPIActivity : AppCompatActivity(), ContactAPIAdapter.OnItemClickLis
             }
 
             override fun onFailure(call: Call<ApiResponse<List<Contact>>>, t: Throwable) {
+                Log.e("API_ERROR", "Failure: ${t.message}")
                 Toast.makeText(
                     this@ContactAPIActivity,
-                    getString(R.string.connection_error, t.message),
+                    "Connection error: ${t.message}",
                     Toast.LENGTH_SHORT
                 ).show()
             }

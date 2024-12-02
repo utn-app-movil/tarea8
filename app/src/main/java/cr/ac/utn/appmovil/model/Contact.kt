@@ -1,41 +1,33 @@
 package cr.ac.utn.appmovil.model
 
-
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class Contact(
-    @SerializedName("contactId")
-    val contactId: String? = null,
+    @SerializedName("personId")
+    val personId: Long?,
 
     @SerializedName("name")
-    val name: String? = null,
+    val name: String?,
 
     @SerializedName("lastName")
-    val lastName: String? = null,
+    val lastName: String?,
 
     @SerializedName("provinceCode")
-    val provinceCode: String? = null,
+    val provinceCode: Int?,
 
     @SerializedName("birthdate")
-    val birthdate: String? = null,
+    val birthdate: String?,
 
     @SerializedName("gender")
-    val gender: String? = null,
-
-    @SerializedName("lat")
-    val lat: Double? = null,
-
-    @SerializedName("long")
-    val long: Double? = null,
+    val gender: String?,
 
     @SerializedName("address")
-    val address: String? = null,
+    val address: String?,
 
     @SerializedName("email")
-    val email: String? = null,
+    val email: String?,
 
     @SerializedName("phone")
-    val phone: Long? = null
+    val phone: Long?
 ) : Serializable
-

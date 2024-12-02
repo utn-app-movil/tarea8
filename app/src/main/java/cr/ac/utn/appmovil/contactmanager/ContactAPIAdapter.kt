@@ -14,16 +14,20 @@ class ContactAPIAdapter(
 
     interface OnItemClickListener {
         fun onItemClick(contact: Contact)
-
     }
 
     inner class ContactViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val nameTextView: TextView = itemView.findViewById(R.id.nameTextView)
-        val contactIdTextView: TextView = itemView.findViewById(R.id.ContactIdTextView)
+        private val nameTextView: TextView = itemView.findViewById(R.id.nameTextView)
+        private val contactIdTextView: TextView = itemView.findViewById(R.id.ContactIdTextView)
 
         fun bind(contact: Contact) {
-            nameTextView.text = itemView.context.getString(R.string.full_name, contact.name, contact.lastName)
-            contactIdTextView.text = itemView.context.getString(R.string.contact_id, contact.contactId)
+
+            val name = contact.name ?: "N/A"
+            val lastName = contact.lastName ?: "N/A"
+            val personId = contact.personId ?: "N/A"
+
+            nameTextView.text = itemView.context.getString(R.string.full_name, name, lastName)
+            contactIdTextView.text = itemView.context.getString(R.string.contact_id, personId)
 
             itemView.setOnClickListener {
                 listener.onItemClick(contact)
@@ -37,11 +41,11 @@ class ContactAPIAdapter(
         return ContactViewHolder(view)
     }
 
-    override fun getItemCount() = people.size
+    override fun getItemCount(): Int {
+        return people.size
+    }
 
     override fun onBindViewHolder(holder: ContactViewHolder, position: Int) {
         holder.bind(people[position])
     }
 }
-
-

@@ -15,7 +15,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-
 class ContactAPIDetail : AppCompatActivity() {
 
     private lateinit var ContactApiService: ContactApiService
@@ -60,7 +59,7 @@ class ContactAPIDetail : AppCompatActivity() {
     }
 
     private fun populateFields(contact: Contact) {
-        contactIdEditText.setText(contact.contactId.toString())
+        contactIdEditText.setText(contact.personId.toString())
         contactIdEditText.isEnabled = false
         nameEditText.setText(contact.name)
         lastNameEditText.setText(contact.lastName)
@@ -106,7 +105,7 @@ class ContactAPIDetail : AppCompatActivity() {
     private fun updatePerson() {
         val updatedPerson = collectContactData() ?: return
         ContactApiService.updateContact(updatedPerson)
-                .enqueue(object : Callback<ApiResponse<Contact>> {
+            .enqueue(object : Callback<ApiResponse<Contact>> {
                 override fun onResponse(
                     call: Call<ApiResponse<Contact>>,
                     response: Response<ApiResponse<Contact>>
@@ -146,22 +145,33 @@ class ContactAPIDetail : AppCompatActivity() {
             val provinceCode = provinceCodeEditText.text.toString().trim()
             val birthdate = birthdateEditText.text.toString().trim()
             val gender = genderEditText.text.toString().trim()
+            val address = findViewById<EditText>(R.id.txtAddressItem).text.toString().trim()
+            val email = findViewById<EditText>(R.id.txtContactEmail).text.toString().trim()
+            val phone = findViewById<EditText>(R.id.txtContactPhone).text.toString().trim()
 
             if (contactId.isEmpty() || name.isEmpty() || lastName.isEmpty() || gender.isEmpty()) {
-                Toast.makeText(this, getString(R.string.fill_required_fields), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.fill_required_fields), Toast.LENGTH_SHORT)
+                    .show()
                 null
             } else {
                 Contact(
-                    contactId = contactId,
+                    personId = contactId.toLong(),
                     name = name,
                     lastName = lastName,
-                    provinceCode = provinceCode,
+                    provinceCode = provinceCode.toInt(),
                     birthdate = birthdate,
-                    gender = gender
+                    gender = gender,
+                    address = if (address.isNotEmpty()) address else null,
+                    email = if (email.isNotEmpty()) email else null,
+                    phone = if (phone.isNotEmpty()) phone.toLong() else null
                 )
             }
         } catch (e: Exception) {
-            Toast.makeText(this, getString(R.string.data_processing_error, e.message), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                getString(R.string.data_processing_error, e.message),
+                Toast.LENGTH_SHORT
+            ).show()
             null
         }
     }
@@ -183,7 +193,8 @@ class ContactAPIDetail : AppCompatActivity() {
 
     private fun deleteContact() {
         contact?.let {
-            val personToDelete = mapOf("contactID" to it.contactId.toString())
+            val personToDelete =
+                mapOf("contactID" to it.personId.toString())
             ContactApiService.deleteContact(personToDelete)
                 .enqueue(object : Callback<ApiResponse<Void>> {
                     override fun onResponse(
