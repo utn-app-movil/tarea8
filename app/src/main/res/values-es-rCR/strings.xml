@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Gestor de Contactos</string>
+    <string name="mnu_add_contact">Nuevo Contacto</string>
+    <string name="mnu_contact_list">Ver Contactos</string>
+    <string name="contactName">Nombre</string>
+    <string name="contactLastName">Apellidos</string>
+    <string name="contactPhone">Celular</string>
+    <string name="contactEmail">Correo</string>
+    <string name="contactAddress">Dirección</string>
+    <string name="save">Guardar</string>
+    <string name="msgSave">Se ha guardado con éxito.</string>
+    <string name="msgDelete">Se ha borrado con éxito.</string>
+    <string name="delete">Eliminar</string>
+    <string name="msgInvalidData">Información es incompleta o inválida. Por favor revisar.</string>
+    <string name="msgInvalidContact">El contacto especificado no es correcto.</string>
+    <string name="msgContactNoFound">El contacto no se encuentra registrado.</string>
+    <string name="mnu_contact_list_custom">Ver Contactos personalizado</string>
+    <string name="mnuRecycleView">Lista con Recycler View</string>
+    <string name="DisplayDialog">Visualizar dialog</string>
+    <string name="Cancel">Cancelar</string>
+    <string name="msgNotFoundContact">The contact does not exist.</string>
+    <string name="Ok">Aceptar</string>
+    <string name="QuestionCloseApp">Desea salir de la aplicación</string>
+    <string name="TitleDialogQuestion">Pregunta</string>
+    <string name="CustomDialog">Dialog personalizado</string>
+    <string name="ConfirmDelete">Desea eliminar la información?</string>
+    <string name="TakePicture">Tomar una foto</string>
+    <string name="SelectPhoto">Seleccionar foto</string>
+    <string-array name="Countries">
+        <item>Costa Rica</item>
+        <item>Estados Unidos</item>
+        <item>Japón</item>
+        <item>México</item>
+        <item>España</item>
+        <item>India</item>
+        <item>Argentina</item>
+        <item>Brasil</item>
+        <item>Italia</item>
+        <item>Honduras</item>
+    </string-array>
+    <string name="contactCountry">País</string>
+    <string name="promptSelectCountry">Seleccione un país</string>
+    <string name="contactId">ID Contacto</string>
+    <string name="error_connection">Error de conexión: %1$s</string>
+    <string name="error_fetch_data">Error al obtener los datos</string>
+    <string name="welcome_message">Bienvenido %1$s %2$s</string>
+    <string name="enter_username_password">Por favor ingrese usuario y contraseña</string>
+    <string name="failed_fetch_images">Error al obtener las imágenes</string>
+    <string name="failed_fetch_breeds">Error al obtener las razas</string>
+    <string name="hint_username">Usuario (ID)</string>
+    <string name="hint_password">Contraseña</string>
+    <string name="button_login">Iniciar Sesión</string>
+    <string name="button_view_breeds">Ver Razas de Perros</string>
+    <string name="text_dog_breed">Raza de Perro</string>
+    <string name="empty_credentials">Por favor ingrese usuario y contraseña</string>
+    <string name="all_fields_required">Todos los campos son obligatorios</string>
+    <string name="register_success">Registro exitoso</string>
+    <string name="register_failed">Error en el registro</string>
+    <string name="welcome_user">Bienvenido %1$s %2$s</string>
+    <string name="invalid_credentials">Credenciales inválidas.</string>
+    <string name="inactive_user">El usuario está inactivo.</string>
+    <string name="server_error">Error al comunicarse con el servidor.</string>
+    <string name="server_error_with_body">Error del servidor: %1$s</string>
+    <string name="connection_error">Error de conexión: %1$s</string>
+    <string name="msgError">Hubo un error, por favor intente nuevamente.</string>
+    <string name="msgUpdate">El contacto ha sido actualizado correctamente.</string>
+    <string name="view_logins">Ver Logueos</string>
+    <string name="select_contact_to_update">Seleccione un contacto para actualizar.</string>
+    <string name="select_contact_to_delete">Seleccione un contacto para eliminar.</string>
+    <string name="error_loading_data">Error al cargar datos: %1$s</string>
+    <string name="person_created_successfully">Persona creada exitosamente.</string>
+    <string name="person_updated_successfully">Persona actualizada exitosamente.</string>
+    <string name="error_processing_fields">Error al procesar los campos ingresados.</string>
+    <string name="unknown_error">Ocurrió un error desconocido. Por favor, inténtelo de nuevo.</string>
+    <string name="neutral_button">Neutral</string>
+    <string name="neutral_button_clicked">Presionaste el botón neutral.</string>
+    <string name="no_people_found">No se encontraron personas.</string>
+    <string name="error_loading_people">Error al cargar personas: Código %1$d, %2$s.</string>
+    <string name="person_id">ID: %1$s</string>
+    <string name="full_name">%1$s %2$s</string>
+    <string name="error_creating_person">Error al crear persona: Código %1$d, %2$s.</string>
+    <string name="person_deleted_successfully">Persona eliminada exitosamente.</string>
+    <string name="error_deleting_person">Error al eliminar persona.</string>
+    <string name="fill_required_fields">Por favor, complete todos los campos obligatorios.</string>
+    <string name="data_processing_error">Error al procesar los datos: %1$s.</string>
+    <string name="api_get_all_contacts">API: Obtener Contactos</string>
+    <string name="api_create_contact">API: Crear Contacto</string>
+    <string name="api_update_contact">API: Actualizar Contacto</string>
+    <string name="api_delete_contact">API: Eliminar Contacto</string>
+    <string name="person_id_hint">ID de la Persona</string>
+    <string name="name_hint">Nombre</string>
+    <string name="last_name_hint">Apellido</string>
+    <string name="province_code_hint">Código de Provincia</string>
+    <string name="birthdate_hint">Fecha de Nacimiento (YYYY-MM-DD)</string>
+    <string name="gender_hint">Género (M/F)</string>
+    <string name="submit_button">Enviar</string>
+    <string name="contact_title">Título</string>
+    <string name="contact_detail">Detalle</string>
+    <string name="phone">Teléfono</string>
+    <string name="hint_person_id">ID de Persona</string>
+    <string name="hint_name">Nombre</string>
+    <string name="hint_last_name">Apellido</string>
+    <string name="hint_province_code">Código de Provincia</string>
+    <string name="hint_birthdate">Fecha de Nacimiento (AAAA-MM-DD)</string>
+    <string name="hint_gender">Género (M/F)</string>
+    <string name="button_submit">Enviar</string>
+    <string name="title">Title</string>
+    <string name="detail">Detail</string>
+    <string name="error_updating_person">Error al actualizar persona: Code %1$d, %2$s.</string>
+    <string name="delete_mnu">Borrar</string>
+    <string name="search_by_id">Search by ID</string>
+    <string name="search">Search</string>
+    <string name="enter_id_to_search">Please enter an ID to search</string>
+    <string name="person_not_found">Person not found</string>
+    <string name="invalid_id_format">Invalid ID format</string>
+
+</resources>
