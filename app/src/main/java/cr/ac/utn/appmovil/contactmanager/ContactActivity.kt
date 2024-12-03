@@ -106,8 +106,7 @@ class ContactActivity : AppCompatActivity() {
     }
 
     private fun saveContact() {
-        // Validar los datos
-        val personId = txtPersonId.text.toString().toIntOrNull()
+        val personId = txtPersonId.text.toString().toLongOrNull()
         val name = txtName.text.toString().trim()
         val lastName = txtLastName.text.toString().trim()
         val birthdateInput = txtBirthdate.text.toString().trim()
@@ -128,22 +127,24 @@ class ContactActivity : AppCompatActivity() {
 
         val contact = ApiContact(personId, name, lastName, provinceCode, birthdate, gender)
 
-        // Crear o actualizar contacto según el modo
         if (isEditionMode) {
-            ApiContactClient.api.updateContact(contact).enqueue(object : Callback<Void> {
-                override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                    if (response.isSuccessful) {
-                        Toast.makeText(this@ContactActivity, "Contacto actualizado", Toast.LENGTH_SHORT).show()
-                        finish()
-                    } else {
-                        Toast.makeText(this@ContactActivity, "Error al actualizar contacto", Toast.LENGTH_SHORT).show()
+            // Usamos el ID del contacto para hacer la actualización, si es necesario
+            currentContactId?.let { contactId ->
+                ApiContactClient.api.updateContact(contactId, contact).enqueue(object : Callback<Void> {
+                    override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                        if (response.isSuccessful) {
+                            Toast.makeText(this@ContactActivity, "Contacto actualizado", Toast.LENGTH_SHORT).show()
+                            finish()
+                        } else {
+                            Toast.makeText(this@ContactActivity, "Error al actualizar contacto", Toast.LENGTH_SHORT).show()
+                        }
                     }
-                }
 
-                override fun onFailure(call: Call<Void>, t: Throwable) {
-                    Toast.makeText(this@ContactActivity, t.message, Toast.LENGTH_LONG).show()
-                }
-            })
+                    override fun onFailure(call: Call<Void>, t: Throwable) {
+                        Toast.makeText(this@ContactActivity, t.message, Toast.LENGTH_LONG).show()
+                    }
+                })
+            }
         } else {
             ApiContactClient.api.createContact(contact).enqueue(object : Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
@@ -168,11 +169,12 @@ class ContactActivity : AppCompatActivity() {
             .setMessage("¿Está seguro de que desea eliminar este contacto?")
             .setPositiveButton("Sí") { _, _ ->
                 currentContactId?.let { id ->
-                    ApiContactClient.api.deleteContact(ApiContact(id, "", "", 0, "", "")).enqueue(object : Callback<Void> {
+                    // Ahora solo pasamos el ID para eliminarlo
+                    ApiContactClient.api.deleteContact(id).enqueue(object : Callback<Void> {
                         override fun onResponse(call: Call<Void>, response: Response<Void>) {
                             if (response.isSuccessful) {
                                 Toast.makeText(this@ContactActivity, "Contacto eliminado", Toast.LENGTH_SHORT).show()
-                                finish()
+                                finish()  // Cerrar la actividad después de eliminar el contacto
                             } else {
                                 Toast.makeText(this@ContactActivity, "Error al eliminar contacto", Toast.LENGTH_SHORT).show()
                             }
@@ -189,7 +191,6 @@ class ContactActivity : AppCompatActivity() {
 
         dialog.show()
     }
-
     private fun cleanScreen() {
         txtPersonId.text.clear()
         txtName.text.clear()
