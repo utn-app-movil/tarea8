@@ -1,0 +1,119 @@
+<resources>
+    <string name="app_name">Contact Manager</string>
+    <string name="mnu_add_contact">Add Contact</string>
+    <string name="mnu_contact_list">View All Contacts</string>
+    <string name="contactName">Name</string>
+    <string name="contactLastName">Last Name</string>
+    <string name="contactPhone">Phone</string>
+    <string name="contactEmail">Email</string>
+    <string name="contactAddress">Address</string>
+    <string name="save">Save</string>
+    <string name="msgSave">The information has been saved.</string>
+    <string name="msgDelete">The information has been deleted.</string>
+    <string name="delete">Delete</string>
+    <string name="msgInvalidData">Missing or invalid information. Please check.</string>
+    <string name="msgInvalidContact">The contact is not correct.</string>
+    <string name="msgContactNoFound">The contact is not found.</string>
+    <string name="mnu_contact_list_custom">View Custom Contact List</string>
+    <string name="mnuRecycleView">Recycler View List</string>
+    <string name="DisplayDialog">Display Dialog</string>
+    <string name="Cancel">Cancel</string>
+    <string name="msgNotFoundContact">The contact does not exist.</string>
+    <string name="Ok">Ok</string>
+    <string name="QuestionCloseApp">Do you want to close this application?</string>
+    <string name="TitleDialogQuestion">Question</string>
+    <string name="CustomDialog">Custom Dialog</string>
+    <string name="ConfirmDelete">Do you want to delete the information?</string>
+    <string name="TakePicture">Take a picture</string>
+    <string name="SelectPhoto">Select Photo</string>
+
+    <string-array name="Countries">
+        <item>Costa Rica</item>
+        <item>United States</item>
+        <item>Japan</item>
+        <item>Mexico</item>
+        <item>Spain</item>
+        <item>India</item>
+        <item>Argentina</item>
+        <item>Brazil</item>
+        <item>Italy</item>
+        <item>Honduras</item>
+    </string-array>
+
+    <string name="contactCountry">Country</string>
+    <string name="promptSelectCountry">Select a Country</string>
+    <string name="contactId">ID</string>
+    <string name="error_connection">Connection error: %1$s</string>
+    <string name="error_fetch_data">Failed to fetch data</string>
+    <string name="welcome_message">Welcome %1$s %2$s</string>
+    <string name="enter_username_password">Please enter username and password</string>
+    <string name="failed_fetch_images">Failed to fetch images</string>
+    <string name="failed_fetch_breeds">Failed to fetch breeds</string>
+    <string name="hint_username">User (ID)</string>
+    <string name="hint_password">Password</string>
+    <string name="button_login">Log In</string>
+    <string name="button_view_breeds">View Dog Breeds</string>
+    <string name="text_dog_breed">Dog Breed</string>
+    <string name="empty_credentials">Please enter username and password</string>
+    <string name="all_fields_required">All fields are required</string>
+    <string name="register_success">Registration successful</string>
+    <string name="register_failed">Registration failed</string>
+    <string name="welcome_user">Welcome %1$s %2$s</string>
+    <string name="invalid_credentials">Invalid credentials.</string>
+    <string name="inactive_user">The user is inactive.</string>
+    <string name="server_error">Error communicating with the server.</string>
+    <string name="server_error_with_body">Server error: %1$s</string>
+    <string name="connection_error">Connection error: %1$s</string>
+    <string name="msgError">An error occurred, please try again.</string>
+    <string name="msgUpdate">The contact has been updated successfully.</string>
+    <string name="view_logins">Show logins</string>
+    <string name="select_contact_to_update">Select a contact to update.</string>
+    <string name="select_contact_to_delete">Select a contact to delete.</string>
+    <string name="error_loading_data">Error loading data: %1$s</string>
+    <string name="person_created_successfully">Person created successfully.</string>
+    <string name="person_updated_successfully">Person updated successfully.</string>
+    <string name="error_processing_fields">Error processing entered fields.</string>
+    <string name="unknown_error">An unknown error occurred. Please try again.</string>
+    <string name="neutral_button">Neutral</string>
+    <string name="neutral_button_clicked">You clicked the neutral button.</string>
+    <string name="no_people_found">No people found.</string>
+    <string name="error_loading_people">Error loading people: Code %1$d, %2$s.</string>
+    <string name="person_id">ID: %1$s</string>
+    <string name="full_name">%1$s %2$s</string>
+    <string name="error_creating_person">Error creating person: Code %1$d, %2$s.</string>
+    <string name="person_deleted_successfully">Person deleted successfully.</string>
+    <string name="error_deleting_person">Error deleting person.</string>
+    <string name="fill_required_fields">Please complete all required fields.</string>
+    <string name="data_processing_error">Error processing data: %1$s.</string>
+    <string name="api_get_all_contacts">API: Get Contacts</string>
+    <string name="api_create_contact">API: Create Contact</string>
+    <string name="api_update_contact">API: Update Contact</string>
+    <string name="api_delete_contact">API: Delete Contact</string>
+    <string name="person_id_hint">Person ID</string>
+    <string name="name_hint">Name</string>
+    <string name="last_name_hint">Last Name</string>
+    <string name="province_code_hint">Province Code</string>
+    <string name="birthdate_hint">Birthdate (YYYY-MM-DD)</string>
+    <string name="gender_hint">Gender (M/F)</string>
+    <string name="submit_button">Submit</string>
+    <string name="contact_title">Title</string>
+    <string name="contact_detail">Detail</string>
+    <string name="phone">Phone</string>
+    <string name="hint_person_id">Person ID</string>
+    <string name="hint_name">Name</string>
+    <string name="hint_last_name">Last Name</string>
+    <string name="hint_province_code">Province Code</string>
+    <string name="hint_birthdate">Birthdate (YYYY-MM-DD)</string>
+    <string name="hint_gender">Gender (M/F)</string>
+    <string name="button_submit">Submit</string>
+    <string name="title">Título</string>
+    <string name="detail">Detalle</string>
+    <string name="error_updating_person">Error updating person: Code %1$d, %2$s.</string>
+    <string name="delete_mnu">Delete</string>
+    <string name="search_by_id">Search by ID</string>
+    <string name="search">Search</string>
+    <string name="enter_id_to_search">Please enter an ID to search</string>
+    <string name="person_not_found">Person not found</string>
+    <string name="invalid_id_format">Invalid ID format</string>
+
+</resources>
